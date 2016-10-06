@@ -2,5 +2,6 @@
 #
 #
 git add -A
-git commit -m "$1"
+read -p "Message for update:" message
+git commit -m "$message"
 git push

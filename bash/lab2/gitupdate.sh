@@ -15,10 +15,12 @@ message="$1"
 git add -A
 
 if [[ $message = *[!\ ]* ]]; then
-  git commit -m "$message"
-else
-  read -p "Message for update:" message
-git commit -m "$message"
+
+    git commit -m "$message"
+  
+        else
+            read -p "Message for update:" message
+            git commit -m "$message"
 fi 
 
 git push

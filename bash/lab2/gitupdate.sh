@@ -8,7 +8,8 @@
 
 #Varables START
 
-message="$1"
+message="$1" #This sets the VAR message to the input entered after the command
+
 
 #Varables STOP
 

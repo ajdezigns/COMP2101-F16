@@ -8,23 +8,29 @@
 randomnumber=$((1+ $RANDOM %10))
 
 #Varalbes STOP
-echo ""
-read -p "Guess a number from 1 to 10: " userguess
-echo ""
 
+while true; do
 
-if [ -n "$userguess" ]; then
+  echo -n "Guess a number from 1 to 10: "; read userguess;
 
-    if [ $userguess -eq $randomnumber ]; then
-
-        echo "Hurrah! You guessed correctly. it was $randomnumber."
-  
-    else
-        echo "Sorry you guessed $userguess and the answer was $randomnumber."
-    fi
-  
-else
-        
+  if [ -n "$userguess" ]; then
+        if [ $userguess -eq $randomnumber ]; then
+           echo "Hurrah! You guessed correctly. it was $randomnumber."
+           echo ""
+           break
+           
+        elif [ "$userguess" = "q" ]; then
+           echo "bye."
+           echo ""
+        break
+    
+        else
+           echo "Sorry you guessed wrong try again."
+           echo ""
+        fi
+     
+  else
     echo "You didn't give me any input"
-            
-fi 
+  fi
+
+done

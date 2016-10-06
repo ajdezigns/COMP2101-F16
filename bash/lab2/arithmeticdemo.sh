@@ -27,4 +27,14 @@ echo $number1"/"$number2" = "$((number1/number2))
 echo -n "Percentage:     "
 echo $number1"%"$number2" = "$((number1%number2))
 
+echo "or it can be done this way"
 
+read -p "Give me 2 numbers, separated by a space: " firstnum secondnum
+
+cat <<EOF
+This is what I learned in class today.
+$firstnum plus $secondnum equals $((firstnum + secondnum))
+$firstnum minus $secondnum equals $((firstnum - secondnum))
+$firstnum times $secondnum equals $((firstnum * secondnum))
+$firstnum divided by $secondnum equals $((firstnum / secondnum)) with a remainder of $((firstnum % secondnum))
+EOF

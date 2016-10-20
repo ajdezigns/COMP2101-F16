@@ -2,16 +2,16 @@
 # this script prompts the user for a count of dice and then rolls them
 
 ### Variables
-count=0 #number of dice to role
-sides=0 #number of sides per die, must be between 4 and 20 
-rolled=0 
+count=0  #number of dice to role.
+sides=0  #number of sides per die, must be between 4 and 20.
+rolled=0 #Tallies the tottal role.
 
 #Command line processing
 while [ $# -gt 0 ]; do
 
  case "$1" in
     -h )
-      echo "Usage: $0 [-h] [-c numberofdice] [-s 4-20]"
+      echo "Usage: $0 [-h] [-c number_of_dice] [-s 4-20]"
       exit 0
       ;;
     

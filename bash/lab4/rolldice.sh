@@ -4,6 +4,7 @@
 ### Variables
 count=0 #number of dice to role
 sides=0 #number of sides per die, must be between 4 and 20 
+rolled=0 
 
 #Command line processing
 while [ $# -gt 0 ]; do
@@ -17,6 +18,7 @@ while [ $# -gt 0 ]; do
     -c )
       if [[ "$2" =~ ^[1-9][0-9]*$ ]]; then
         count=$2
+        shift
       else
         echo "You gave me '$2' a the number of dice to roll, bad plan muchacho." >&2
         exit 1
@@ -32,7 +34,6 @@ while [ $# -gt 0 ]; do
           sides=$2
           shift
         fi
-        sides=$2
       else
         echo "You gave me '$2' a the number of sides per die, no way that's happening." >&2
         exit 1
@@ -68,10 +69,12 @@ done
 for (( rolls=0 ; rolls < count ; rolls++ )); do
 # roll the dice
   die1=$(($RANDOM %$sides +1))
+  rolled=$(($die1 + $rolled))
 # show the roll results
-  echo "Rolled $die1"
+  echo "Rolled: $die1"
 done
 
+echo "Tottal Role: $rolled"
 
 
 

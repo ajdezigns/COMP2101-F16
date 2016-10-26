@@ -2,16 +2,26 @@
 # this script prompts the user for a count of dice and then rolls them
 
 ### Variables
+declare -i count
 count=0  #number of dice to role.
+declare -i sides
 sides=0  #number of sides per die, must be between 4 and 20.
 rolled=0 #Tallies the tottal role.
 
+###Functions
+function usage {
+echo "Usage: $0 [-h] [-c number_of_dice] [-s 4-20]"
+}
+
+function error-message {
+echo "$@" >&2
+}
 #Command line processing
 while [ $# -gt 0 ]; do
 
  case "$1" in
     -h )
-      echo "Usage: $0 [-h] [-c number_of_dice] [-s 4-20]"
+      usage
       exit 0
       ;;
     
@@ -20,7 +30,7 @@ while [ $# -gt 0 ]; do
         count=$2
         shift
       else
-        echo "You gave me '$2' a the number of dice to roll, bad plan muchacho." >&2
+        error-message "You gave me '$2' a the number of dice to roll, bad plan muchacho."
         exit 1
       fi
       ;;
@@ -28,20 +38,20 @@ while [ $# -gt 0 ]; do
     -s )
       if [[ "$2" =~ ^[1-9][0-9]*$ ]]; then
         if [ $2 -lt 4 -o $2 -gt 20 ]; then
-          echo "Number of sides must be between 4 and 20, inclusive, fool." >&2
+          error-message "Number of sides must be between 4 and 20, inclusive, fool."
           exit 1
         else
           sides=$2
           shift
         fi
       else
-        echo "You gave me '$2' a the number of sides per die, no way that's happening." >&2
+        error-message "You gave me '$2' a the number of sides per die, no way that's happening."
         exit 1
       fi
       ;;
     * )
-      echo "I do not understand '$1'" >&2
-      echo "Usage: $0 [-h] [-c numberofdice] [-s 4-20]"
+      error-message "I do not understand '$1'"
+      usage
       exit 1
       ::
     
@@ -56,12 +66,8 @@ until [[ $count =~ ^[1-9][0-9]*$ ]]; do
 done
 
 # get a valid side count from the user
-until [[ $sides =~ ^[1-9][0-9]*$ ]]; do
+until [ $sides -gt 3 -a $sides -lt 21 ]; do
   read -p "How many sides should each die have [4-20]? " sides
-  if [ "$sides" -lt 4 -o "$sides" -gt 20 ]; then
-    echo "$sides must be from 4 to 20 inclusice" >&2
-    sides=0
-  fi
 done
 
 ### Main Script

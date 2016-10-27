@@ -1,24 +1,33 @@
 #!/bin/bash
 
-# display how many regular files there are in the Pictures directory
-# and how much disk space they use. It should also show the sizes
-# and names of the 3 largest files
+# Display how many regular files there are in the Pictures directory
+# and how much disk space they use.  It should also show the sizes
+# and names of the 3 largest files.
 
 ### Variables
+
 directory=~/Pictures
 numberOfFilesToShow=3
 
+
 ### Functions
+
 function usage {
-    echo "Usage: $0 [-h|--help] [-c|--count numberOfFilesToDisplay] [directoryToWorkOn]"
-    echo "Count defaults to 3, Directory defaults to ~/Pictures"
+    echo " Help Doc for: $0 "
+    echo "--------------------------------------------------------------------------------"
+    echo "|-h|--help  : access this file                                                 |"
+    echo "|-c|--count : Number 0f files to display [space]  Directory to load files from |"
+    echo "| Defaults number of files to display is 3, Directory defaults to ~/Pictures   |"
+    echo "--------------------------------------------------------------------------------"
 }
 
 function error-message {
     echo "$@" >&2
 }
 
+
 ### COMMAND LINE PROCESSING 
+
 gotadirectory=no
 while [ $# -gt 0 ]; do
     case "$1" in
@@ -51,6 +60,7 @@ while [ $# -gt 0 ]; do
     esac
     shift
 done
+
 
 ### Main
 

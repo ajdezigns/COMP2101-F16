@@ -9,11 +9,21 @@
 directory=~/Pictures
 numberOfFilesToShow=3
 
+red=`tput setaf 1`
+green=`tput setaf 2`
+yellow=`tput setaf 3`
+blue=`tput setaf 4`
+magenta=`tput setaf 5`
+cyan=`tput setaf 6`
+white=`tput setaf 7`
+
+reset=`tput sgr0`
+
 
 ### Functions
 
 function usage {
-    echo " Help Doc for: $0 "
+    echo " Help Doc for: ${red}$0${reset} "
     echo "--------------------------------------------------------------------------------"
     echo "|-h|--help  : access this file                                                 |"
     echo "|-c|--count : Number 0f files to display [space]  Directory to load files from |"

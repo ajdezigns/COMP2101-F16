@@ -15,11 +15,21 @@ declare -i count_down=$1
 
 orginal_count=0
 
+red=`tput setaf 1`
+green=`tput setaf 2`
+yellow=`tput setaf 3`
+blue=`tput setaf 4`
+magenta=`tput setaf 5`
+cyan=`tput setaf 6`
+white=`tput setaf 7`
+
+reset=`tput sgr0`
+
 
 ### Functions
 function usage { # Displays helpful information to user
     echo ""
-    echo "Help Doc for: $0  "
+    echo "Help Doc for: ${red}$0${reset}  "
     echo "-------------------------------------------------------"
     echo "| -h|--help  : Opens this help file.                  |"
     echo "| -c|--count : Takes number of seconds to count down. |"
@@ -29,6 +39,17 @@ function usage { # Displays helpful information to user
 function error-message { # Error Processing 
     echo "$@" >&2
 }
+
+function cleanup_and_exit { # restore cursor & keyboard echo
+	tput cnorm  
+	stty echo 
+	exit $1
+}
+
+### KEYBOARD TRAPS
+
+trap 'echo "" && count_down=$orginal_count && clear' 2 # This resets the countdown
+trap 'clear && echo "You quit the program." && cleanup_and_exit && exit 0' 3 # This closes the program with a message
 
 
 ### COMMAND LINE PROCESSING 
@@ -67,22 +88,22 @@ if [ $orginal_count -eq 0 ]; then # if statment to check for user input
     
 fi
 
-### KEYBOARD TRAPS
-
-trap 'echo "" && count_down=$orginal_count' 2 # This resets the countdown
-trap 'echo "You quit the program." && exit 0' 3 # This closes the program with a message
+clear
+tput civis # hide cursor
+stty -echo # disable keyboard echo
 
 while [ $count_down -gt 0 ]; do # Loop creating the countdown
 
-    echo "The current countdown number is: $count_down"
-    echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+    echo "${white}The current countdown number is:${green} $count_down${reset}"
+    echo "${blue}~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~${reset}"
     
     count_down=$(($count_down-1))
     
     sleep 1 # Number of seconds between responces
 
 done  
-    
+
+cleanup_and_exit 
 
 
 

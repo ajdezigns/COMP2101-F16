@@ -1,19 +1,19 @@
 #!/bin/bash
 
-# function that returns the value of the "array"
-
-value () { # returns values of the virtual array for each index passed in paramete
-
-   #you could add checks for non-integer, negative, etc
-   while [ "$#" -gt 0 ]
-   do
-      #you could add checks for non-integer, negative, etc
-      printf "$(( ($1 - 1) * 5 + 200 ))"
-      shift
-      [ "$#" -gt 0 ] && printf " "
-   done 
-}
-
-read -p "number " test 
-
-value
+while true; do
+    echo "Which interface do you wish to monitor?"
+        cd /sys/class/net && select interface in *; do
+            
+            if [ "$interface" = "" ]; then
+                echo  "You didn't pick an interface. Pick a number from the list."
+            else
+                if [ ! -d "/sys/class/net/$interface" ]; then
+                    echo  "The interface that you have chosen does not exist. Please verify."
+                else
+                    echo "You will be monitoring the $interface interface"
+                    break
+                fi
+            fi
+        done
+    break
+done

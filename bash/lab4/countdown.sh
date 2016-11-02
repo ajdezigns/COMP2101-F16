@@ -80,7 +80,7 @@ done
 
 
 
-if [ $orginal_count -eq 0 ]; then # if statment to check for user input
+if [ $orginal_count -eq 0 ]; then # if statment to check for user input from command line processing
 
     read -p "provide number of seconds to countdown from " count_down # Requesting userinput for time to count down for
     echo ""

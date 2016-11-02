@@ -38,17 +38,12 @@ function error-message {
     
 }
 
-function ip_address {
-
- `ifconfig $interface 2>/dev/null|awk '/inet addr:/ {print $2}'|sed 's/addr://'`
-
-}
 
 ### COMMAND LINE PROCESSING 
-gotadirectory=no
+
 while [ $# -gt 0 ]; do
     case "$1" in
-    -h | --help ) # show usage diagram
+    -h | --help ) # show help file
         usage
         exit 0
         ;;
@@ -71,32 +66,41 @@ if [ $showrout = 1 ];  then # If statment to check if user wants defualt gateway
 
     cat <<EOF
     
-    The default gateway is $gatewayip
+    The default ${blue}gateway${reset} is ${blue}$gatewayip${reset}
     
 EOF
-    else
+
+else
     
-while true; do # Loop pulling in the names of interfaces on the computer
-    echo "Which interface do you wish to monitor?${green}"
+    while true; do # Loop pulling in the names of interfaces on the computer
+        clear
+        
+        echo "Which interface do you wish to monitor?${green}"
+        echo ""
         cd /sys/class/net && select interface in *; do
             
-            if [ "$interface" = "" ]; then
-                echo  "${red}You didn't pick an interface. Pick a number from the list try again.${reset}"
+        if [ "$interface" = "" ]; then
+            echo  "${red}You didn't pick an interface. Pick a number from the list try again.${reset}"
+            
             else
+            
                 if [ ! -d "/sys/class/net/$interface" ]; then
+                
                     echo  "The interface that you have chosen does not exist. Please verify."
+                    
                 else
-                    echo "${reset}Interface ${blue}$interface${reset} currently has the ip of ${blue}`ifconfig $interface 2>/dev/null|awk '/inet addr:/ {print $2}'|sed 's/addr://'`
-${reset}" 
+                
+                    echo ""
+echo "${reset}Interface ${blue}$interface${reset} currently has the ip of ${blue}`ifconfig $interface 2>/dev/null|awk '/inet addr:/ {print $2}'|sed 's/addr://'`${reset}"
                     break
                 fi
-            fi
+                
+        fi
+        
         done
+        
     break
-done
-
-
-
+    done
 fi
 
 

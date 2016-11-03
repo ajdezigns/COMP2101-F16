@@ -21,11 +21,11 @@ function usage {
 
 
     echo " Help Doc for: ${red}$0${reset} "
-    echo "--------------------------------------------------------------------------------"
-    echo "|-h|--help   : access this file                                                |"
-    echo "|-n|--number : Number 0f dice to use                                           |"
-    echo "|-s|--sides  : Number of sides the dice have                                   |"
-    echo "--------------------------------------------------------------------------------"
+    echo "--------------------------------------------------------------"
+    echo "|-h|--help   : access this file                              |"
+    echo "|-n|--number : Number of dice to use between 4 and 20        |"
+    echo "|-s|--sides  : Number of sides the dice have between 1 and 5 |"
+    echo "--------------------------------------------------------------"
 
     }
 
@@ -99,30 +99,33 @@ clear
 
 until [[ $number_of_dice =~ ^[1-9][0-9]*$ ]]; do # validates user input below
   
-  read -p "Between ${green}1 and 5${reset} how many die will we role?: " number_of_dice # gets number of dice to role from user
+    read -p "Between ${green}1 and 5${reset} how many die will we role?: " number_of_dice # gets number of dice to role from user
   
 done
 
 
 until [ $number_of_sides -gt 3 -a $number_of_sides -lt 21 ]; do # validates user input below
 
-  read -p "Between ${green}4 and 20${reset} how many sides will we each die have?: " number_of_sides # gets number of sides on each die from user
+    read -p "Between ${green}4 and 20${reset} how many sides will we each die have?: " number_of_sides # gets number of sides on each die from user
  
 done
 
 echo ""
-echo "|-----------------|"
+echo "|-----------------"
+
 for (( rolls=0 ; rolls < number_of_dice ; rolls++ )); do # roll's the dice
 
-  die1=$(($RANDOM %$number_of_sides +1))
+    die1=$(($RANDOM %$number_of_sides +1))
   
-  rolled=$(($die1 + $rolled))
+    rolled=$(($die1 + $rolled))
 
-  echo "| Die rolled : ${blue}$die1${reset}  |" # Displays the rezult of each role
+    echo "| Die rolled : ${blue}$die1${reset}  " # Displays the rezult of each role
 
 done
-echo "|-----------------|"
-echo "| Tottal Role: ${blue}$rolled${reset} |" # Displays the rezult of the tottal role
-echo "|-----------------|"
+
+echo "|-----------------"
+echo "| Tottal Role: ${blue}$rolled${reset} " # Displays the rezult of the tottal role
+echo "|-----------------"
+
 cleanup_and_exit
 

@@ -6,29 +6,34 @@
 
 ### Variables
 
-directory=~/Pictures
-numberOfFilesToShow=3
+directory=~/Pictures   # Default directory in witch to look for images
+numberOfFilesToShow=3  # Default number of files to display info on
 
-red=`tput setaf 1`
-green=`tput setaf 2`
-yellow=`tput setaf 3`
-blue=`tput setaf 4`
-magenta=`tput setaf 5`
-cyan=`tput setaf 6`
-white=`tput setaf 7`
+red=`tput setaf 1`     # 
+green=`tput setaf 2`   #
+yellow=`tput setaf 3`  #
+blue=`tput setaf 4`    #
+magenta=`tput setaf 5` # These set colurs for text
+cyan=`tput setaf 6`    #
+white=`tput setaf 7`   #
+                       #
+reset=`tput sgr0`      # This resets the colour of the text 
 
-reset=`tput sgr0`
-
+gotadirectory=no       # Default directly assumption 
 
 ### Functions
 
 function usage {
+    clear
     echo " Help Doc for: ${red}$0${reset} "
-    echo "--------------------------------------------------------------------------------"
-    echo "|-h|--help  : access this file                                                 |"
-    echo "|-c|--count : Number 0f files to display [space]  Directory to load files from |"
-    echo "| Defaults number of files to display is 3, Directory defaults to ~/Pictures   |"
-    echo "--------------------------------------------------------------------------------"
+    echo "------------------------------------------------"
+    echo "|-h|--help      : access this file             |"
+    echo "|-c|--count     : Number of files to display   |"
+    echo "|  Defaults number of files to display is 3    |"
+    echo "|  Directory defaults to ~/Pictures if a       |"
+    echo "|  different directory is needed simply enter  |"
+    echo "|  it after the command or after the count     |"
+    echo "------------------------------------------------"
 }
 
 function error-message {
@@ -38,10 +43,10 @@ function error-message {
 
 ### COMMAND LINE PROCESSING 
 
-gotadirectory=no
+
 while [ $# -gt 0 ]; do
     case "$1" in
-    -h | --help ) # show usage diagram
+    -h | --help ) # show help doc
         usage
         exit 0
         ;;
@@ -56,11 +61,9 @@ while [ $# -gt 0 ]; do
         fi
         ;;
     * ) # grab the directory name to work on
-    # if we haven't got a directory from the command line yet, this must be it
         if [ $gotadirectory = "no" ]; then
             directory=$1
             gotadirectory="yes"
-    # otherwise this is some kind of command line garbage
         else
             usage
             error-message "I didn't understand '$1' as a directory, I already a directory $directory"
@@ -74,12 +77,12 @@ done
 
 ### Main
 
-echo -n "In the ~/Pictures directory, the number of files is "
+echo -n "In the ${blue}$directory${reset} directory, the number of files is ${green}"
 find $directory -type f |wc -l
 
-echo -n "Those files use "
+echo -n "${reset}Those files use ${green}"
 du -sh $directory |awk '{print $1}'
 
-echo "The $numberOfFilesToShow largest files are:"
-echo "========================"
+echo "${reset}The ${green}$numberOfFilesToShow${reset} largest files are:"
+echo "${green}-------------------------------------------${red}"
 du -h $directory/* |sort -h |tail -$numberOfFilesToShow
